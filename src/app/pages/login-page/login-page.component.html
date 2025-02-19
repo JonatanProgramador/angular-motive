@@ -1,0 +1,16 @@
+<section>
+<form [formGroup]="data">
+    <mat-form-field >
+        <mat-label>Nombre</mat-label>
+        <input formControlName="name"  matInput>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Contraseña</mat-label>
+        <input formControlName="password" matInput>
+    </mat-form-field>
+    <button [disabled]="sending" (click)="send($event)" mat-raised-button>Entrar</button>
+    <p>{{message}}</p>
+</form>
+</section>
+
+

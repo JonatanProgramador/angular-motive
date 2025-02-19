@@ -1,0 +1,9 @@
+<main>
+<nav  class="navMenu">
+  <a [routerLink]="''">Home</a>
+  <a [routerLink]="'login'">Login</a>
+  <span [hidden]="!auth.getPermised()"><a  [routerLink]="'mensajes'">Mensajes</a></span>
+  <div class="dot"></div>
+</nav>
+<router-outlet></router-outlet>
+</main>

@@ -1,0 +1,95 @@
+#card {
+    min-height: 200px;
+    width: 600px;
+    background-color: rgb(240, 230, 210);
+    border: 4px rgb(67, 37, 22) solid;
+    border-radius: 50px;
+
+}
+
+
+p {
+    font-family: "Caveat", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-size: 2em;
+    font-style: normal;
+}
+
+.open {
+    animation-name: open;
+    animation-duration: 1s;
+}
+
+.close {
+    animation-name: close;
+    animation-duration: 10000ms;
+    animation-iteration-count:infinite;
+}
+
+@keyframes close {
+    0% {
+        transform: scale(0);
+    }
+    10% {
+        transform: scale(1);
+    }
+
+    20% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1);
+    }
+
+    60% {
+        transform: scale(1);
+    }
+    70% {
+        transform: scale(1);
+    }
+    80% {
+        transform: scale(1);
+    }
+    90% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0);
+    }
+
+}
+
+
+@keyframes open {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+#mensaje {
+    margin: 30px;
+    margin-bottom: 0px;
+}
+
+#author {
+    text-align: right;
+    margin: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    margin-right: 50px;
+}

@@ -3,6 +3,10 @@
     <p>Editando mensaje</p>
     <mat-form-field [style]="{height: '50vh'}">
       <mat-label>Mensaje</mat-label>
-      <textarea [rows]="100" [style]="{height: '10%'}" matInput>{{data.message}}</textarea>
+      <textarea [(ngModel)]="data.message" [rows]="100" [style]="{height: '10%'}" matInput>{{data.message}}</textarea>
     </mat-form-field>
   </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button >No Thanks</button>
+    <button (click)="clickOk()" mat-button cdkFocusInitial>Ok</button>
+  </mat-dialog-actions>

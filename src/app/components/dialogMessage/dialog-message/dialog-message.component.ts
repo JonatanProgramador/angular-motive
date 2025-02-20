@@ -10,15 +10,24 @@ import {
 } from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dialog-message',
-  imports: [MatDialogTitle, MatDialogContent, MatFormFieldModule, MatInputModule],
+  imports: [MatDialogTitle,FormsModule, MatButtonModule, MatDialogContent, MatFormFieldModule, MatInputModule, MatDialogActions],
   templateUrl: './dialog-message.component.html',
   styleUrl: './dialog-message.component.css'
 })
 export class DialogMessageComponent {
 
   readonly data = inject(MAT_DIALOG_DATA);
+  readonly dialogRef = inject(MatDialogRef<DialogMessageComponent>);
+
+  clickOk() {
+    this.dialogRef.close(this.data);
+  }
 
 }
+
+

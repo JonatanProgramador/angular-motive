@@ -37,6 +37,15 @@ export class MessagesPageComponent {
     const dialogRef = this.dialog.open(DialogMessageComponent, {
       data: {id:event.id, message:event.message},
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        let adios:MessageInterface[] = [...this.messages];
+        const index = adios.findIndex((message) => message.id === event.id);
+        adios[index] = result;
+        this.messages = adios;
+      }
+    });
   }
 
 

@@ -20,7 +20,7 @@ export class LoginPageComponent {
   
   message:string|null|undefined = "";
   sending:boolean = false;
-  showPassword:boolean = false;
+  hiddenPassword:boolean = true;
 
   constructor(private service:UserService) {}
   
@@ -37,6 +37,6 @@ export class LoginPageComponent {
   }
 
   setShowPassword() {
-    this.showPassword = !this.showPassword;
+    this.hiddenPassword = !this.hiddenPassword;
   }
 }

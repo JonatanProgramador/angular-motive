@@ -1,6 +1,10 @@
-div{
+.table{
     margin: 10px;
    width: fit-content;
+}
+
+.table button{
+   margin-bottom: 5px;
 }
 
 #row:hover {

@@ -28,6 +28,19 @@ export class MessageService {
     const data = await result.json();
     return data;
   }
+
+  async update(message:string, id:number) {
+    const url = new URL('http://localhost:3000/messages/'+id);
+    const result = await fetch(url, {
+      credentials: 'include',
+      method: 'PUT',
+      body:JSON.stringify({message:message}),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    });
+    return result.status === 200;
+  }
 }
 
 

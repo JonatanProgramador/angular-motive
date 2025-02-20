@@ -6,15 +6,15 @@
     </mat-form-field>
     <mat-form-field [style]="{width: '200px'}">
         <mat-label>Contraseña</mat-label>
-        <input [type]="showPassword ? 'password' : 'text'" formControlName="password" matInput>
+        <input [type]="hiddenPassword? 'password' : 'text'" formControlName="password" matInput>
         <button
         mat-icon-button
         matSuffix
         (click)="setShowPassword()"
         [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="showPassword"
+        [attr.aria-pressed]="hiddenPassword"
       >
-        <mat-icon>{{showPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        <mat-icon>{{hiddenPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field>
     <button [disabled]="sending" (click)="send($event)" mat-raised-button>Entrar</button>

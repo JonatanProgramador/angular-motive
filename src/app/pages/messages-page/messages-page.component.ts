@@ -3,13 +3,14 @@ import { MessageService } from '../../services/message.service';
 import { MessageInterface } from '../../interfaces/MessageInterface';
 import { MatTableModule } from '@angular/material/table';
 import { UserService } from '../../services/user.service';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DialogMessageComponent } from '../../components/dialogMessage/dialog-message/dialog-message.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
   selector: 'app-messages-page',
-  imports: [MatTableModule],
+  imports: [MatTableModule, MatButtonModule],
   templateUrl: './messages-page.component.html',
   styleUrl: './messages-page.component.css'
 })
@@ -32,18 +33,20 @@ export class MessagesPageComponent {
 
 
 
-  selectMessage(event:MessageInterface) {
-    console.log(event.id);
+  selectMessage(event: MessageInterface) {
     const dialogRef = this.dialog.open(DialogMessageComponent, {
-      data: {id:event.id, message:event.message},
+      data: { id: event.id, message: event.message },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(async result => {
       if (result !== undefined) {
-        let adios:MessageInterface[] = [...this.messages];
-        const index = adios.findIndex((message) => message.id === event.id);
-        adios[index] = result;
-        this.messages = adios;
+        const resultUpdate = await this.MessageService.update(result.message, result.id)
+        if (resultUpdate) {
+          let adios: MessageInterface[] = [...this.messages];
+          const index = adios.findIndex((message) => message.id === event.id);
+          adios[index] = result;
+          this.messages = adios;
+        }
       }
     });
   }

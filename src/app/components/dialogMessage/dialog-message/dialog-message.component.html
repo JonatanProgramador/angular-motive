@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Mensaje ID: {{data.id}}</h2>
+<mat-dialog-content>
+    <p>Editando mensaje</p>
+    <mat-form-field [style]="{height: '50vh'}">
+      <mat-label>Mensaje</mat-label>
+      <textarea [rows]="100" [style]="{height: '10%'}" matInput>{{data.message}}</textarea>
+    </mat-form-field>
+  </mat-dialog-content>

@@ -28,6 +28,9 @@ export class UserService {
     })
    if(result.status===200) {
     this.permised = true;
+    return true;
+   } else {
+    return false
    }
   }
 }

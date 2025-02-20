@@ -2,16 +2,16 @@
 <div >
     <table mat-table [dataSource]="messages" class="mat-elevation-z8">
 
-
+        
 
         <ng-container matColumnDef="message">
-            <th mat-header-cell *matHeaderCellDef>Mensajes</th>
-            <td mat-cell *matCellDef="let element"> {{element.message}} </td>
+            <th mat-header-cell *matHeaderCellDef>Mensaje</th>
+            <td id="row"   mat-cell *matCellDef="let element" (click)="selectMessage(element)"> {{element.message}} </td>
         </ng-container>
 
 
-        <tr mat-header-row *matHeaderRowDef="['message']"></tr>
-        <tr id="row"  mat-row *matRowDef="let row; columns: ['message'];"></tr>
+        <tr  mat-header-row *matHeaderRowDef="['message']"></tr>
+        <tr    mat-row *matRowDef="let row; columns: ['message'];"></tr>
     </table>
 </div>
 } @else {

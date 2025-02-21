@@ -29,6 +29,19 @@ export class MessageService {
     return data;
   }
 
+  async create(message:string) {
+    const url = new URL('http://localhost:3000/messages/');
+    const result = await fetch(url, {
+      credentials: 'include',
+      method: 'POST',
+      body:JSON.stringify({message:message}),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    });
+    return result.status === 201? await result.json():false;
+  }
+
   async update(message:string, id:number) {
     const url = new URL('http://localhost:3000/messages/'+id);
     const result = await fetch(url, {

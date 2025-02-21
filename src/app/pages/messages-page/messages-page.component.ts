@@ -22,6 +22,25 @@ export class MessagesPageComponent {
     this.getMessages();
   }
 
+  newMessage() {
+    console.log("Creando nuevo mensaje");
+    const dialogRef = this.dialog.open(DialogMessageComponent, {
+      data: { },
+    });
+
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result !== undefined) {
+        console.log(result);
+        const newMessage:MessageInterface = await this.MessageService.create(result.message);
+        console.log(newMessage)
+        if(newMessage){
+        let adios: MessageInterface[] = [...this.messages,newMessage];
+        this.messages = adios;}
+
+      } 
+    });
+  }
+
   async getMessages() {
     let result = await this.MessageService.getAllByUser();
     if (result) {

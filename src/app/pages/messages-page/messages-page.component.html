@@ -1,12 +1,12 @@
 @if (messages.length !== 0) {
 <div class="table">
-    <button mat-stroked-button>Crear</button>
+    <button (click)="newMessage()" mat-stroked-button>Crear</button>
     <table mat-table [dataSource]="messages" class="mat-elevation-z8">
 
         
 
         <ng-container matColumnDef="message">
-            <th mat-header-cell *matHeaderCellDef>Mensaje</th>
+            <th mat-header-cell *matHeaderCellDef>Mensajes</th>
             <td id="row"   mat-cell *matCellDef="let element" (click)="selectMessage(element)"> {{element.message}} </td>
         </ng-container>
 

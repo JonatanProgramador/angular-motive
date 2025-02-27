@@ -18,73 +18,90 @@ import { NgClass } from '@angular/common';
 export class MessagesPageComponent {
   messages: MessageInterface[] = [];
   dialog = inject(MatDialog)
-  selectMessage:MessageInterface = {id:-1, message:"", author:""};
-  seeding:boolean = false;
+  selectMessage: MessageInterface = { id: -1, message: "", author: "" };
+  seeding: boolean = false;
 
   constructor(private MessageService: MessageService, private auth: UserService) {
     this.getMessages();
   }
 
   newMessage() {
-    console.log("Creando nuevo mensaje");
     const dialogRef = this.dialog.open(DialogMessageComponent, {
       data: {},
     });
 
-    dialogRef.afterClosed().subscribe(async result => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
         this.seeding = true;
-        const newMessage: MessageInterface = await this.MessageService.create(result.message);
-        console.log(newMessage)
-        if (newMessage) {
-          let adios: MessageInterface[] = [...this.messages, newMessage];
-          this.messages = adios;
-        }
-        this.seeding = false;
+        const obsMessage = this.MessageService.create(result.message);
+        if (obsMessage) {
+          obsMessage.subscribe((data) => {
+            const adios: MessageInterface[] = [...this.messages, data as MessageInterface];
+            this.messages = adios;
+            this.seeding = false;
+          })
+        } else { //salta si no hay permisos en un caso cuando el token caduca
+          this.seeding = false;
+        }   
       }
     });
   }
 
-  async getMessages() {
-    let result = await this.MessageService.getAllByUser();
+  getMessages() {
+    this.seeding = true;
+    let result = this.MessageService.getAllByUser();
     if (result) {
-      this.messages = result;
-    } else {
-      this.auth.setPermised(false);
+      result.subscribe((data) => {
+        this.messages = data as MessageInterface[];
+        this.seeding = false;
+      })
+    } else { //salta si no hay permisos en un caso cuando el token caduca
+      this.seeding = false;
     }
   }
 
-  async deleteMessege() {
+  deleteMessege() {
     this.seeding = true;
-    const result = await this.MessageService.delete(this.selectMessage.id);
-    if(result)  {
-      this.messages = [...this.messages.filter((message)=> message.id !== this.selectMessage.id)];
+    const result = this.MessageService.delete(this.selectMessage.id);
+    if (result) {
+      result.subscribe((data) => {
+        this.messages = [...this.messages.filter((message) => message.id !== this.selectMessage.id)];
+        this.seeding = false;
+      })
+    } else { //salta si no hay permisos en un caso cuando el token caduca
+      this.seeding = false;
     }
-    this.seeding = false;
+
   }
 
   editMessage() {
+
     const dialogRef = this.dialog.open(DialogMessageComponent, {
       data: { id: this.selectMessage.id, message: this.selectMessage.message },
     });
 
-    dialogRef.afterClosed().subscribe(async result => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
         this.seeding = true;
-        const resultUpdate = await this.MessageService.update(result.message, result.id)
+        const resultUpdate = this.MessageService.update(result.message, result.id)
         if (resultUpdate) {
-          let adios: MessageInterface[] = [...this.messages];
-          const index = adios.findIndex((message) => message.id === result.id);
-          adios[index] = result;
-          this.messages = adios;
+          resultUpdate.subscribe((data) => {
+            let adios: MessageInterface[] = [...this.messages];
+            const index = adios.findIndex((message) => message.id === result.id);
+            adios[index] = result;
+            this.messages = adios;
+            this.seeding = false;
+            this.selectMessage = { id: -1, message: "", author: "" };
+          });
+        } else { //salta si no hay permisos en un caso cuando el token caduca
+          this.seeding = false;
+          this.selectMessage = { id: -1, message: "", author: "" };
         }
-        this.seeding = false;
-        this.selectMessage = {id:-1, message:"", author:""};
       }
     });
   }
 
   clickSelectMessage(event: MessageInterface) {
-    this.selectMessage = event.id === this.selectMessage.id ? {id:-1, message:"", author:""} : event;
+    this.selectMessage = event.id === this.selectMessage.id ? { id: -1, message: "", author: "" } : event;
   }
 }

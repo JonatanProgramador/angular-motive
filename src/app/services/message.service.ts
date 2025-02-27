@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { tokenInterceptor } from '../interceptors/tokenInterceptor';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,58 +10,54 @@ export class MessageService {
 
   readonly url = "http://localhost:3000/";
 
-  constructor(private httpClient:HttpClient) { }
+  constructor(private httpClient: HttpClient, private serviceUser: UserService) { }
 
 
 
   getAll() {
-    const url = this.url+'messages';
+    const url = this.url + 'messages';
     const result = this.httpClient.get(url);
     return result;
   }
 
-  async getAllByUser() {
-    const url = new URL(this.url+'messages/user');
-    const result = await tokenInterceptor(url, {
-      method: 'get'
-    })
-    if(result && result.status !== 200) {
+  getAllByUser() {
+    const url = this.url + 'messages/user';
+    this.serviceUser.isAuth(); //cambialo por un interceptor
+    if (this.serviceUser.getPermised()) {
+      const result = this.httpClient.get(url, { withCredentials: true })
+      return result;
+    } else {
       return false;
     }
-    const data = await result?.json();
-    return data;
   }
 
-  async delete(id:number) {
-    const url = new URL(this.url+'messages/'+id);
-    const result = await tokenInterceptor(url, {
-      method: 'DELETE'
-    });
-    return result && result.status === 200;
+  delete(id: number) {
+    const url = this.url + 'messages/' + id;
+    this.serviceUser.isAuth(); //cambialo por un interceptor
+    const result = this.httpClient.delete(url, { withCredentials: true })
+    return result;
   }
 
-  async create(message:string) {
-    const url = new URL(this.url+'messages/');
-    const result = await tokenInterceptor(url, {
-      method: 'POST',
-      body:JSON.stringify({message:message}),
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    });
-    return result && result.status === 201? await result.json():false;
+  create(message: string) {
+    const url = this.url + 'messages/';
+    this.serviceUser.isAuth(); //cambialo por un interceptor
+    if (this.serviceUser.getPermised()) {
+      const result = this.httpClient.post(url, { message: message }, { withCredentials: true, headers: { 'Content-Type': 'application/json' } });
+      return result;
+    } else {
+      return false;
+    }
   }
 
-  async update(message:string, id:number) {
-    const url = new URL(this.url+'messages/'+id);
-    const result = await tokenInterceptor(url, {
-      method: 'PUT',
-      body:JSON.stringify({message:message}),
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    });
-    return result && result.status === 200;
+  update(message: string, id: number) {
+    const url = this.url + 'messages/' + id;
+    this.serviceUser.isAuth(); //cambialo por un interceptor
+    if (this.serviceUser.getPermised()) {
+      const result = this.httpClient.put(url, { message: message }, { withCredentials: true, headers: { 'Content-Type': 'application/json' } });
+      return result;
+    } else {
+      return false;
+    }
   }
 }
 

@@ -5,6 +5,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-page',
@@ -24,15 +25,19 @@ export class LoginPageComponent {
 
   constructor(private service:UserService) {}
   
-  async send(event:Event) {
+  send(event:Event) {
     event.preventDefault();
     if(this.data.valid) {
       this.sending = true;
-      let result = await this.service.login(this.data.value.name??"", this.data.value.password??"");
-      this.sending = false;
-      this.message = !result?"Login error":"Correcto";
-    } else {
-      this.message="datos invalidos"
+      let result = this.service.login(this.data.value.name??"", this.data.value.password??"");
+      result.subscribe((data) => {
+        this.message = 'message' in data?data.message as string:this.message;
+        this.service.isAuth();
+        this.sending = false;
+      }, (error:HttpErrorResponse)=> {
+        this.message="Error al identificar al usuario"
+        this.sending = false;
+      })
     }
   }
 

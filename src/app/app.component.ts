@@ -12,7 +12,7 @@ import { MessageService } from './services/message.service';
 })
 export class AppComponent {
   constructor( public auth:UserService, private messageService:MessageService) {
-    (async ()=>auth.isAuth())();
+   auth.isAuth();
   }
   
 }

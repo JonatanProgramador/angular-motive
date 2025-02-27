@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { booleanAttribute, Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class UserService {
 
   readonly url = "http://localhost:3000/";
 
-  constructor() { }
+  constructor(private httpClient:HttpClient) { }
 
   getPermised() {
     return this.permised;
@@ -18,30 +19,17 @@ export class UserService {
     this.permised = permised;
   }
 
-  async isAuth() {
-    const result = await fetch(this.url+'auth', {
-      method:'get',
-      credentials: 'include',
-    })
-    const data = await result.json();
-    this.permised = data.result;
+  isAuth() {
+    const result = this.httpClient.get(this.url+'auth',{withCredentials:true})
+    result.subscribe((data)=>{
+      this.permised = "result" in data?data.result as boolean:this.permised;
+    });
   }
 
-  async login(name:string, password:string) {
+  login(name:string, password:string) {
     let auth = btoa(name+":"+password);
-    const result = await fetch(this.url+'login', {
-      method:'post',
-      credentials: 'include',
-      headers: { "Content-Type": "application/json",
-        'Authorization': `Basic ${auth}`
-     }
-    })
-   if(result.status===200) {
-    this.permised = true;
-    return true;
-   } else {
-    return false
-   }
+    const result = this.httpClient.post(this.url+'login', {}, {withCredentials:true, headers:{'Authorization': `Basic ${auth}`}})
+    return result;
   }
 }
 

@@ -1,25 +1,21 @@
 <section>
-<form [formGroup]="data">
+  <form [formGroup]="data">
+
     <mat-form-field [style]="{width: '200px'}">
-        <mat-label>Nombre</mat-label>
-        <input formControlName="name"  matInput>
+      <mat-label>Nombre</mat-label>
+      <input formControlName="name" matInput>
     </mat-form-field>
+
     <mat-form-field [style]="{width: '200px'}">
-        <mat-label>Contraseña</mat-label>
-        <input [type]="hiddenPassword? 'password' : 'text'" formControlName="password" matInput>
-        <button
-        mat-icon-button
-        matSuffix
-        (click)="setShowPassword()"
-        [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hiddenPassword"
-      >
+      <mat-label>Contraseña</mat-label>
+      <input [type]="hiddenPassword? 'password' : 'text'" formControlName="password" matInput>
+      <button mat-icon-button matSuffix (click)="setShowPassword()" [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hiddenPassword">
         <mat-icon>{{hiddenPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
     </mat-form-field>
-    <button [disabled]="sending" (click)="send($event)" mat-raised-button>Entrar</button>
+
+      <button [disabled]="sending" (click)="send($event)" mat-raised-button>Entrar</button>
     <p [style]="{color:message==='Correcto'?'green':'red'}">{{message}}</p>
-</form>
+  </form>
 </section>
-
-

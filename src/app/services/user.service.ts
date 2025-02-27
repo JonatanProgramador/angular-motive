@@ -7,6 +7,7 @@ export class UserService {
 
   private permised:boolean = false;
 
+  readonly url = "http://localhost:3000/";
 
   constructor() { }
 
@@ -17,9 +18,18 @@ export class UserService {
     this.permised = permised;
   }
 
+  async isAuth() {
+    const result = await fetch(this.url+'auth', {
+      method:'get',
+      credentials: 'include',
+    })
+    const data = await result.json();
+    this.permised = data.result;
+  }
+
   async login(name:string, password:string) {
     let auth = btoa(name+":"+password);
-    const result = await fetch('http://localhost:3000/login', {
+    const result = await fetch(this.url+'login', {
       method:'post',
       credentials: 'include',
       headers: { "Content-Type": "application/json",

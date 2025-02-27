@@ -3,11 +3,16 @@
    width: fit-content;
 }
 
-.table button{
+.buttons button{
    margin-bottom: 5px;
+   margin-right: 5px;
+   
 }
 
 #row:hover {
-    background-color: red;
     cursor: pointer;
+}
+
+.rowActive {
+    background-color: red;
 }

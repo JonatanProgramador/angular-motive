@@ -1,58 +1,66 @@
 import { Injectable } from '@angular/core';
+import { tokenInterceptor } from '../interceptors/tokenInterceptor';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
 
-  constructor() { }
+  readonly url = "http://localhost:3000/";
+
+  constructor(private httpClient:HttpClient) { }
 
 
 
-  async getAll() {
-    const url = new URL('http://localhost:3000/messages');
-    const result = await fetch(url)
-    const data = await result.json()
-    return data;
+  getAll() {
+    const url = this.url+'messages';
+    const result = this.httpClient.get(url);
+    return result;
   }
 
   async getAllByUser() {
-    const url = new URL('http://localhost:3000/messages/user');
-    const result = await fetch(url, {
-      credentials: 'include',
+    const url = new URL(this.url+'messages/user');
+    const result = await tokenInterceptor(url, {
       method: 'get'
     })
-    if(result.status !== 200) {
+    if(result && result.status !== 200) {
       return false;
     }
-    const data = await result.json();
+    const data = await result?.json();
     return data;
   }
 
+  async delete(id:number) {
+    const url = new URL(this.url+'messages/'+id);
+    const result = await tokenInterceptor(url, {
+      method: 'DELETE'
+    });
+    return result && result.status === 200;
+  }
+
   async create(message:string) {
-    const url = new URL('http://localhost:3000/messages/');
-    const result = await fetch(url, {
-      credentials: 'include',
+    const url = new URL(this.url+'messages/');
+    const result = await tokenInterceptor(url, {
       method: 'POST',
       body:JSON.stringify({message:message}),
       headers:{
         'Content-Type': 'application/json'
       }
     });
-    return result.status === 201? await result.json():false;
+    return result && result.status === 201? await result.json():false;
   }
 
   async update(message:string, id:number) {
-    const url = new URL('http://localhost:3000/messages/'+id);
-    const result = await fetch(url, {
-      credentials: 'include',
+    const url = new URL(this.url+'messages/'+id);
+    const result = await tokenInterceptor(url, {
       method: 'PUT',
       body:JSON.stringify({message:message}),
       headers:{
         'Content-Type': 'application/json'
       }
     });
-    return result.status === 200;
+    return result && result.status === 200;
   }
 }
 

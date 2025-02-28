@@ -54,7 +54,8 @@ export class MessagesPageComponent {
       result.subscribe((data) => {
         this.messages = data as MessageInterface[];
         this.seeding = false;
-      })
+      },
+    )
     } else { //salta si no hay permisos en un caso cuando el token caduca
       this.seeding = false;
     }

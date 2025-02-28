@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { tokenInterceptor } from '../interceptors/tokenInterceptor';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from './user.service';
 
@@ -22,13 +21,8 @@ export class MessageService {
 
   getAllByUser() {
     const url = this.url + 'messages/user';
-    this.serviceUser.isAuth(); //cambialo por un interceptor
-    if (this.serviceUser.getPermised()) {
       const result = this.httpClient.get(url, { withCredentials: true })
       return result;
-    } else {
-      return false;
-    }
   }
 
   delete(id: number) {

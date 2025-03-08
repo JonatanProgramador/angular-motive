@@ -1,4 +1,4 @@
-@if (messages.length !== 0) {
+
 <div class="table">
     <div class="buttons">
     <button [disabled]="seeding" (click)="newMessage()" mat-raised-button>Crear</button>
@@ -19,6 +19,3 @@
         <tr    mat-row *matRowDef="let row; columns: ['message'];"></tr>
     </table>
 </div>
-} @else {
-    <p>No tienes permisos</p>
-}

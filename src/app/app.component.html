@@ -4,17 +4,26 @@
   mat-raised-button
   routerLink="/" 
   [ngStyle]="{'background-color': isActive('/') ? 'rgb(160, 252, 252)' : ''}"
-  mat-raised-button
   ><mat-icon [ngStyle]="{'margin':'0'}">home</mat-icon></button>
-  @if(auth.getPermised()){
-  <button (click)="clickLogout()" mat-raised-button><mat-icon [ngStyle]="{'margin':'0'}">logout</mat-icon></button>
-  } @else {
-  <button  
-  routerLink="/login" 
-  [ngStyle]="{'background-color': isActive('/login') ? 'rgb(160, 252, 252)' : ''}"
-  mat-raised-button ><mat-icon [ngStyle]="{'margin':'0'}">login</mat-icon></button>
-  }
   <span [hidden]="!auth.getPermised()"><button [ngStyle]="{'background-color': isActive('/mensajes') ? 'rgb(160, 252, 252)' : ''}" [routerLink]="'mensajes'" mat-raised-button ><mat-icon [ngStyle]="{'margin':'0'}">chat</mat-icon></button></span>
+  <button  
+  mat-raised-button
+  [matMenuTriggerFor]="menu"
+  ><mat-icon [ngStyle]="{'margin':'0'}">person</mat-icon></button>
+  <mat-menu #menu="matMenu">
+    @if(!auth.getPermised()){
+    <button routerLink="/login"   mat-menu-item>
+      Login
+    </button>
+  } @else {
+    <button (click)="clickLogout()"   mat-menu-item>
+      Logout
+    </button>
+  }
+    <button routerLink="/registrar"  mat-menu-item>
+      Registrar
+    </button>
+  </mat-menu>
 </nav>
 <router-outlet></router-outlet>
 </main>

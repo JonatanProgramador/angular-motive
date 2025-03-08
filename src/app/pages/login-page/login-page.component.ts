@@ -6,6 +6,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login-page',
@@ -23,7 +24,7 @@ export class LoginPageComponent {
   sending:boolean = false;
   hiddenPassword:boolean = true;
 
-  constructor(private service:UserService) {}
+  constructor(private service:UserService, private snackBar:MatSnackBar) {}
   
   send(event:Event) {
     event.preventDefault();
@@ -31,11 +32,14 @@ export class LoginPageComponent {
       this.sending = true;
       let result = this.service.login(this.data.value.name??"", this.data.value.password??"");
       result.subscribe((data) => {
-        this.message = 'message' in data?data.message as string:this.message;
+        if('message' in data){
+          this.snackBar.open(data.message as string, '', {duration:1000});
+        }
         this.service.isAuth();
         this.sending = false;
       }, (error:HttpErrorResponse)=> {
-        this.message="Error al identificar al usuario"
+
+        this.snackBar.open("Error al identificar al usuario", '', {duration:1000});
         this.sending = false;
       })
     }

@@ -1,8 +1,6 @@
-main {
-  width: 100%;
-}
+
 .navMenu {
-  width: 100%;
+  
   background-color: aliceblue;
   padding: 10px;
 }
@@ -11,7 +9,9 @@ main {
   border-color: white;
 }
 
+.login-button {
 
+}
 
 nav * {
   margin-right: 5px;

@@ -33,10 +33,15 @@ export class UserService {
   }
 
   logout() {
-    const result = this.httpClient.post(this.url+'logout',{});
+    const result = this.httpClient.post(this.url+'logout',{},{withCredentials:true});
     result.subscribe((data)=> {
       this.permised = false;
     })
+  }
+
+  register(name:string, password:string) {
+    const result = this.httpClient.post(this.url+'register', {name:name, password:password});
+    return result;
   }
 }
 

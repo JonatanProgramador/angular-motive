@@ -16,6 +16,8 @@
     </mat-form-field>
 
       <button [disabled]="sending" (click)="send($event)" mat-raised-button>Entrar</button>
+      @if(message){
     <p [style]="{color:message==='Login correcto'?'green':'red'}">{{message}}</p>
+  }
   </form>
 </section>

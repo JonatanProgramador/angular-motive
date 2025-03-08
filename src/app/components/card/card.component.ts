@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { MessageInterface } from '../../interfaces/MessageInterface';
-import { NgClass } from '@angular/common';
+import { NgClass, NgStyle } from '@angular/common';
+import {MatCardModule} from '@angular/material/card'
 
 @Component({
   selector: 'app-card',
-  imports: [NgClass],
+  imports: [NgClass, NgStyle, MatCardModule],
   templateUrl: './card.component.html',
   styleUrl: './card.component.css'
 })

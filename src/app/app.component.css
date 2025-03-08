@@ -1,64 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
-* {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+main {
+  width: 100%;
+}
+.navMenu {
+  width: 100%;
+  background-color: aliceblue;
+  padding: 10px;
+}
+.active {
+  background-color: rgb(160, 252, 252);
+  border-color: white;
 }
 
-body {
-  background: #272727;
-  font-family: "Montserrat", sans-serif;
+
+
+nav * {
+  margin-right: 5px;
 }
-
-
-.navMenu a {
-  color: #030303;
-  text-decoration: none;
-  font-size: 2em;
-  text-transform: uppercase;
-  font-weight: 500;
-  display: inline-block;
-  width: 140px;
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-}
-
-.navMenu a:hover {
-  color: #462a02;
-  font-weight: 1000;
-}
-
-.navMenu .dot {
-  width: 6px;
-  height: 6px;
-  background: #462a02;
-  border-radius: 50%;
-  opacity: 0;
-  
-}
-
-.navMenu a:nth-child(1):hover ~ .dot {
-  -webkit-transform: translateX(50px);
-  transform: translateX(50px);
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-  opacity: 1;
-}
-
-.navMenu a:nth-child(2):hover ~ .dot {
-  -webkit-transform: translateX(190px);
-  transform: translateX(190px);
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-  opacity: 1;
-}
-
-.navMenu a:nth-child(3):hover ~ .dot {
-  -webkit-transform: translateX(360px);
-  transform: translateX(360px);
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-  opacity: 1;
-}
-

@@ -1,4 +1,5 @@
-<div [hidden]="!message" [ngClass]="{close:openAnimationCard}"  id="card">
-    <p id="mensaje">{{message.message}}</p>
-    <p id="author">{{message.author}}</p>
-</div>
+
+<mat-card id="card-com" [hidden]="!message" [ngClass]="{close:openAnimationCard}">
+    <mat-card-title>{{message.message}}</mat-card-title>
+    <mat-card-subtitle [ngStyle]="{'font-weight': '900'}" class="card-author">{{message.author}}</mat-card-subtitle>
+</mat-card>

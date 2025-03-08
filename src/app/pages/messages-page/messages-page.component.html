@@ -1,16 +1,16 @@
 @if (messages.length !== 0) {
 <div class="table">
     <div class="buttons">
-    <button [disabled]="seeding" (click)="newMessage()" mat-stroked-button>Crear</button>
-    <button [disabled]="selectMessage.id < 0 || seeding" (click)="editMessage()"  mat-stroked-button>Editar</button>
-    <button [disabled]="selectMessage.id < 0 || seeding" (click)="deleteMessege()"   mat-stroked-button>Eliminar</button>
+    <button [disabled]="seeding" (click)="newMessage()" mat-raised-button>Crear</button>
+    <button [disabled]="selectMessage.id < 0 || seeding" (click)="editMessage()"  mat-raised-button>Editar</button>
+    <button [disabled]="selectMessage.id < 0 || seeding" (click)="deleteMessege()"   mat-raised-button>Eliminar</button>
 </div>
     <table mat-table [dataSource]="messages" class="mat-elevation-z8">
 
         
 
         <ng-container matColumnDef="message">
-            <th mat-header-cell *matHeaderCellDef>Mensajes</th>
+            <th  mat-header-cell *matHeaderCellDef>Mensajes</th>
             <td id="row" [ngClass]="element.id===selectMessage.id?'rowActive':''"   mat-cell *matCellDef="let element" (click)="clickSelectMessage(element)"> {{element.message}} </td>
         </ng-container>
 

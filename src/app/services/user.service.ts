@@ -31,5 +31,12 @@ export class UserService {
     const result = this.httpClient.post(this.url+'login', {}, {withCredentials:true, headers:{'Authorization': `Basic ${auth}`}})
     return result;
   }
+
+  logout() {
+    const result = this.httpClient.post(this.url+'logout',{});
+    result.subscribe((data)=> {
+      this.permised = false;
+    })
+  }
 }
 

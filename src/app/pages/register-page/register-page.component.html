@@ -15,9 +15,15 @@
       </button>
     </mat-form-field>
 
+    <mat-form-field [style]="{width: '200px'}">
+      <mat-label>Repita Contraseña</mat-label>
+      <input [type]="hiddenPassword? 'password' : 'text'" formControlName="passwordRepeat" matInput>
+      <button mat-icon-button matSuffix (click)="setShowPassword()" [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hiddenPassword">
+        <mat-icon>{{hiddenPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+
       <button [disabled]="sending" (click)="send($event)" mat-raised-button>Registrar</button>
-      @if(message){
-    <p [style]="{color:message==='Login correcto'?'green':'red'}">{{message}}</p>
-  }
   </form>
 </section>

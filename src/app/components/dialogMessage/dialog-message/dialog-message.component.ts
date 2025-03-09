@@ -8,26 +8,32 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 
-//TODO. implementar el control de formularios como login.
 
 @Component({
   selector: 'app-dialog-message',
-  imports: [MatDialogTitle,FormsModule, MatButtonModule, MatDialogContent, MatFormFieldModule, MatInputModule, MatDialogActions],
+  imports: [MatDialogTitle, FormsModule, MatButtonModule, MatDialogContent, MatFormFieldModule, MatInputModule, MatDialogActions, ReactiveFormsModule],
   templateUrl: './dialog-message.component.html',
   styleUrl: './dialog-message.component.css'
 })
 export class DialogMessageComponent {
 
-  readonly data = inject(MAT_DIALOG_DATA);
+
+  data = new FormGroup({
+    id: new FormControl(inject(MAT_DIALOG_DATA).id, []),
+    message: new FormControl(inject(MAT_DIALOG_DATA).message??'', [Validators.required])
+  });
+
   readonly dialogRef = inject(MatDialogRef<DialogMessageComponent>);
 
   clickChange() {
-    this.dialogRef.close(this.data);
+    if(this.data.valid){
+    this.dialogRef.close(this.data.value);
+  }
   }
 
   clickCancel() {

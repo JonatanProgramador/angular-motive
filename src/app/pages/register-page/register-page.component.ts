@@ -7,6 +7,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UserService } from '../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-page',
@@ -17,28 +18,36 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class RegisterPageComponent {
   data = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required])
+    password: new FormControl('', [Validators.required]),
+    passwordRepeat: new FormControl('', [Validators.required])
   });
 
   message: string | null | undefined = "";
   sending: boolean = false;
   hiddenPassword: boolean = true;
 
-  constructor(private service: UserService, private snackBar: MatSnackBar) { }
+  constructor(private service: UserService, private snackBar: MatSnackBar, private router:Router) { }
 
   send(event: Event) {
     event.preventDefault();
-    if (this.data.valid) {
+    if (this.data.valid && this.data.value.password === this.data.value.passwordRepeat) {
       this.sending = true;
       let result = this.service.register(this.data.value.name ?? "", this.data.value.password ?? "");
-      result.subscribe((data) => {
-        this.snackBar.open("Registro realizado correctamente", '', { duration: 1000 });
-        this.sending = false;
-      }, (error: HttpErrorResponse) => {
+      result.subscribe({
+        next: (data) => {
+          this.snackBar.open("Registro realizado correctamente", '', { duration: 1000 });
+          this.sending = false;
+          setTimeout(()=>{this.router.navigate(['/login'])},1000);
+        }, error: (error: HttpErrorResponse) => {
 
-        this.snackBar.open("Error al registrar", '', { duration: 1000 });
-        this.sending = false;
-      })
+          this.snackBar.open("Error al registrar", '', { duration: 1000 });
+          this.sending = false;
+        }
+      });
+    } else if (!this.data.valid) {
+      this.snackBar.open("Datos invalidos", '', { duration: 1000 });
+    } else {
+      this.snackBar.open("La contraseña no coiciden", '', { duration: 1000 });
     }
   }
 

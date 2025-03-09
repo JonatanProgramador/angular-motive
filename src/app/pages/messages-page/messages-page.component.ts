@@ -34,6 +34,7 @@ export class MessagesPageComponent {
       if (result !== undefined) {
         this.seeding = true;
         const obsMessage = this.MessageService.create(result.message);
+        
         if (obsMessage) {
           obsMessage.subscribe((data) => {
             const adios: MessageInterface[] = [...this.messages, data as MessageInterface];

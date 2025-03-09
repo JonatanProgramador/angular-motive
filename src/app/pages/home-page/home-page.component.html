@@ -1,3 +1,7 @@
 <section>
+    @if(this.messages.length > 0){
     <app-card   [hidden]="message.id===0"[message]="message"/>
+} @else {
+    <p>No hay mensajes que mostrar</p>
+}
 </section>

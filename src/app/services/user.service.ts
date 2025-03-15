@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { booleanAttribute, Injectable } from '@angular/core';
+import { ENV } from '../../../env';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class UserService {
 
   private permised:boolean = false;
 
-  readonly url = "http://localhost:3000/";
+  readonly url = ENV.getUrlServe();
 
   constructor(private httpClient:HttpClient) { }
 

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserService } from './user.service';
+import { ENV } from '../../../env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
 
-  readonly url = "http://localhost:3000/";
+  readonly url = ENV.getUrlServe();
 
   constructor(private httpClient: HttpClient) { }
 
